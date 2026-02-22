@@ -13,7 +13,7 @@ export function TaskCard({ task, removeTask }: Props) {
 
   return (
     <div className={styles.root}>
-      <div>
+      <div className={styles.title}>
         {completed && <span className={styles.completed}>✔</span>}
         {title}
       </div>
