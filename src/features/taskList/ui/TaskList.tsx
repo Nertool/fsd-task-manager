@@ -1,8 +1,6 @@
 import { type Task, TaskCard } from 'entities/task';
 import { Filter } from 'features/taskList';
-import { Button } from 'shared';
-
-import styles from './TaskList.module.css';
+import { TaskFilter } from 'features/taskFilter';
 
 type Props = {
   tasks: Task[];
@@ -14,29 +12,15 @@ type Props = {
 export function TaskList({ tasks, filter, setFilter, removeTask }: Props) {
   return (
     <>
-      <div className={styles.filter}>
-        <Button
-          onClick={() => setFilter(Filter.All)}
-          isActive={filter === Filter.All}
-        >
-          Все
-        </Button>
-        <Button
-          onClick={() => setFilter(Filter.Completed)}
-          isActive={filter === Filter.Completed}
-        >
-          Выполненные
-        </Button>
-        <Button
-          onClick={() => setFilter(Filter.Incomplete)}
-          isActive={filter === Filter.Incomplete}
-        >
-          Не выполненные
-        </Button>
-      </div>
-      {tasks.map(task => (
-        <TaskCard key={task.id} task={task} removeTask={removeTask} />
-      ))}
+      <TaskFilter filter={filter} setFilter={setFilter} />
+
+      {tasks.length ? (
+        tasks.map(task => (
+          <TaskCard key={task.id} task={task} removeTask={removeTask} />
+        ))
+      ) : (
+        <div>Нет задач</div>
+      )}
     </>
   );
 }
