@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { Task } from 'entities/task';
 
@@ -20,28 +20,32 @@ export function useTasks() {
   const [tasks, setTasks] = useState(initial);
   const [filter, setFilter] = useState<Filter>(Filter.All);
 
-  const onChangeFilter = (filterValue: Filter) => {
+  const completeTasks = useMemo(
+    () => tasks.filter(task => task.completed),
+    [tasks],
+  );
+
+  const incompleteTasks = useMemo(
+    () => tasks.filter(task => !task.completed),
+    [tasks],
+  );
+
+  const onChangeFilter = useCallback((filterValue: Filter) => {
     setFilter(filterValue);
+  }, []);
 
-    switch (filterValue) {
-      case Filter.Completed:
-        setTasks(initial.filter(task => task.completed));
-        break;
-      case Filter.Incomplete:
-        setTasks(initial.filter(task => !task.completed));
-        break;
-      case Filter.All:
-      default:
-        setTasks(initial);
-    }
-  };
+  const removeTask = useCallback((id: string) => {
+    setTasks(prev => prev.filter(task => task.id !== id));
+  }, []);
 
-  const removeTask = (id: string) => {
-    setTasks(tasks.filter(task => task.id !== id));
-  };
+  const filteredTasks = {
+    [Filter.Completed]: completeTasks,
+    [Filter.Incomplete]: incompleteTasks,
+    [Filter.All]: tasks,
+  }[filter];
 
   return {
-    tasks,
+    tasks: filteredTasks,
     filter,
     setFilter: onChangeFilter,
     removeTask,
