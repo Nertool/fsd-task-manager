@@ -7,20 +7,52 @@ type Props = {
   filter: Filter;
   setFilter: (filter: Filter) => void;
   removeTask: (id: string) => void;
+  isLoading: boolean;
+  isError: boolean;
 };
 
-export function TaskList({ tasks, filter, setFilter, removeTask }: Props) {
+export function TaskList({
+  tasks,
+  filter,
+  setFilter,
+  removeTask,
+  isLoading,
+  isError,
+}: Props) {
+  if (isLoading) {
+    return (
+      <>
+        <TaskFilter filter={filter} setFilter={setFilter} />
+        <div>Загрузка...</div>
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <TaskFilter filter={filter} setFilter={setFilter} />
+        <div>Ошибка</div>
+      </>
+    );
+  }
+
+  if (tasks.length === 0) {
+    return (
+      <>
+        <TaskFilter filter={filter} setFilter={setFilter} />
+        <div>Нет задач</div>
+      </>
+    );
+  }
+
   return (
     <>
       <TaskFilter filter={filter} setFilter={setFilter} />
 
-      {tasks.length ? (
-        tasks.map(task => (
-          <TaskCard key={task.id} task={task} removeTask={removeTask} />
-        ))
-      ) : (
-        <div>Нет задач</div>
-      )}
+      {tasks.map(task => (
+        <TaskCard key={task.id} task={task} removeTask={removeTask} />
+      ))}
     </>
   );
 }
