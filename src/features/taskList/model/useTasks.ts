@@ -1,14 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import type { Task } from 'entities/task';
-
-const initial: Task[] = [
-  { id: '1', title: 'Изучить архитектуру', completed: true },
-  { id: '2', title: 'Изучить мемоизацию', completed: false },
-  { id: '3', title: 'Изучить еще что-нибудь', completed: false },
-  { id: '4', title: 'Сдать домашу вовремя', completed: false },
-  { id: '5', title: 'Защитить проект', completed: false },
-];
+import { useGetTasksQuery } from 'entities/task';
 
 export enum Filter {
   All = 'all',
@@ -17,7 +9,9 @@ export enum Filter {
 }
 
 export function useTasks() {
-  const [tasks, setTasks] = useState(initial);
+  const { data: remoteTasks = [], isLoading, isError } = useGetTasksQuery();
+
+  const [tasks, setTasks] = useState(remoteTasks);
   const [filter, setFilter] = useState<Filter>(Filter.All);
 
   const completeTasks = useMemo(
@@ -44,10 +38,19 @@ export function useTasks() {
     [Filter.All]: tasks,
   }[filter];
 
+  useEffect(() => {
+    if (remoteTasks.length > 0 && tasks.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTasks(remoteTasks);
+    }
+  }, [remoteTasks, tasks.length]);
+
   return {
     tasks: filteredTasks,
     filter,
     setFilter: onChangeFilter,
     removeTask,
+    isLoading,
+    isError,
   };
 }
