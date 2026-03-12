@@ -1,7 +1,7 @@
-import { TaskPage } from 'pages/tasks';
+import { RegisterPage } from 'pages/register';
 
 function App() {
-  return <TaskPage />;
+  return <RegisterPage />;
 }
 
 export default App;
