@@ -1,0 +1,45 @@
+.root {
+  padding-top: 16px;
+  border-top: 1px solid #ffffff55;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.error {
+  font-size: 12px;
+  color: #b91c1c;
+}
+
+.success {
+  font-size: 13px;
+  color: #166534;
+}
+
