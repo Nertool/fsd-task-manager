@@ -1,0 +1,44 @@
+.form {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.socials {
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid #ffffff55;
+  padding-top: 16px;
+}
+
+.fieldHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-size: 14px;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+}
+
+.socialItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
