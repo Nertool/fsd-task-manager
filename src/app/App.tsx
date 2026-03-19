@@ -1,7 +1,7 @@
-import { RegisterPage } from 'pages/register';
+import { RefExamplesPage } from 'pages/refExamples';
 
 function App() {
-  return <RegisterPage />;
+  return <RefExamplesPage />;
 }
 
 export default App;
