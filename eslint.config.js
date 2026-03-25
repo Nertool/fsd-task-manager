@@ -28,6 +28,7 @@ export default defineConfig([
     },
     rules: {
       'prettier/prettier': 'warn',
+      'react-hooks/refs': 'off',
     },
   },
 ]);
